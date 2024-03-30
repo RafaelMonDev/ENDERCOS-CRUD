@@ -18,14 +18,15 @@
     </div>
 
     <div class="divTable">
-      <table>
+      <table id="myTable">
         <thead>
           <tr>
-            <th>Rua</th>
-            <th>Número</th>
-            <th>Bairro</th>
-            <th>Cidade</th>
-            <th>CEP</th>
+            <th onclick="sortTable(0)">Rua</th>
+            <th onclick="sortTable(1)">Número</th>
+            <th onclick="sortTable(2)">Bairro</th>
+            <th onclick="sortTable(3)">Cidade</th>
+            <th onclick="sortTable(4)">UF</th>
+            <th onclick="sortTable(5)">CEP</th>
             <th class="acao">Editar</th>
             <th class="acao">Excluir</th>
           </tr>
@@ -54,6 +55,10 @@
   
           <label for="m-cidade">Cidade</label>
           <input id="m-cidade" type="text"/>
+
+          <label for="m-uf">UF</label>
+          <input id="m-uf" type="text"/>
+
           <button id="btnSalvar">Salvar</button>
         </form>
       </div>
@@ -66,6 +71,8 @@
   <script>
      $('#m-cep').mask('00000-000');
   </script>
+
+
 </body>
 
 </html>

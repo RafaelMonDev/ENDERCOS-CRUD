@@ -5,6 +5,7 @@ const sRua = document.querySelector('#m-rua')
 const sNumero = document.querySelector('#m-numero')
 const sBairro = document.querySelector('#m-bairro')
 const sCidade = document.querySelector('#m-cidade')
+const sUf = document.querySelector('#m-uf')
 const btnSalvar = document.querySelector('#btnSalvar')
 const btnConsultar = document.querySelector('#btnConsultar')
 
@@ -52,6 +53,7 @@ function openModal(edit = false, index = 0){ // Essa função ativa o form dos c
         sNumero.value = itens[index].numero
         sBairro.value = itens[index].bairro
         sCidade.value = itens[index].cidade
+        sUf.value = itens[index].uf
         
         id = index
     } else {      
@@ -84,6 +86,7 @@ function mostrarEndereço(dados) {               //Insere os resutados do objeto
         sRua.value = `${dados.logradouro}`    
         sBairro.value = `${dados.bairro}`
         sCidade.value = `${dados.localidade}`
+        sUf.value = `${dados.uf}`
         console.log(dados)
     }            
 }
@@ -97,6 +100,7 @@ function insertItem(item, index) { //Insere os itens na tabela, inclusive os bot
         <td>${item.numero}</td>
         <td>${item.bairro}</td>
         <td>${item.cidade}</td>
+        <td>${item.uf}</td>
         <td>${item.cep}</td>
         <td class="acao">
             <button onclick="editItem(${index})"><i class='bx bx-edit' ></i></button>
@@ -122,9 +126,10 @@ btnSalvar.onclick = e => { //Salva os dados dos itens no array designando o camp
         itens[id].numero = sNumero.value
         itens[id].bairro = sBairro.value
         itens[id].cidade = sCidade.value
+        itens[id].uf = sUf.value
         itens[id].cep = sCep.value
     } else {
-        itens.push({'rua': sRua.value, 'numero': sNumero.value, 'bairro': sBairro.value, 'cidade': sCidade.value, 'cep': sCep.value})        
+        itens.push({'rua': sRua.value, 'numero': sNumero.value, 'bairro': sBairro.value, 'cidade': sCidade.value, 'uf': sUf.value, 'cep': sCep.value})        
     }
 
     setItensBD()
@@ -140,5 +145,61 @@ function limpaCampos(){
     sNumero.value = ''
     sBairro.value = ''
     sCidade.value = ''
+    sUf.value = ''
     sCep.value = ''
 }
+// Função para ordenar a tabela quando um cabeçalho da coluna é clicado
+function sortTable(colIndex) {
+    // Array com os índices das colunas correspondentes a cidade, bairro e estado
+    var sortableColumns = [3, 2, 4]; // Índices baseados na ordem dos cabeçalhos
+    
+    // Verificar se o índice da coluna está na lista de colunas ordenáveis
+    if (sortableColumns.includes(colIndex)) {
+      // Variáveis para manipulação da tabela
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      // Obter a referência da tabela pelo ID
+      table = document.getElementById("myTable");
+      // Definir a direção inicial da ordenação como ascendente
+      dir = "asc"; 
+      // Loop principal para ordenar a tabela
+      switching = true;
+      while (switching) {
+        switching = false;
+        // Obter todas as linhas da tabela
+        rows = table.rows;
+        // Loop pelas linhas (excluindo a primeira, que contém os cabeçalhos)
+        for (i = 1; i < (rows.length - 1); i++) {
+          shouldSwitch = false;
+          // Obter os elementos das células nas colunas atual e próxima
+          x = rows[i].getElementsByTagName("td")[colIndex];
+          y = rows[i + 1].getElementsByTagName("td")[colIndex];
+          // Verificar se as linhas devem trocar de posição com base na direção de ordenação
+          if (dir == "asc") {
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              break;
+            }
+          } else if (dir == "desc") {
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+        }
+        if (shouldSwitch) {
+          // Trocar as linhas de posição
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+          // Incrementar a contagem de trocas
+          switchcount++; 
+        } else {
+          // Inverter a direção de ordenação se nenhuma troca foi feita e a direção atual é ascendente
+          if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+          }
+        }
+      }
+    }
+  }
+  
