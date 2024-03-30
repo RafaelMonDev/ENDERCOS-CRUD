@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Endereços</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <span>Cadastro de Endereços</span>
+      <button onclick="openModal()" id="new">Incluir</i></button>
+    </div>
+
+    <div class="divTable">
+      <table>
+        <thead>
+          <tr>
+            <th>Rua</th>
+            <th>Número</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>CEP</th>
+            <th class="acao">Editar</th>
+            <th class="acao">Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="modal-container">
+      <div class="modal">
+        <form>
+
+          <label for="m-cep">Cep</label>
+          <input id="m-cep" type="text" />
+          <button id="btnConsultar" onclick="consultaEndereco()" type="button">Consultar</button>
+
+          <label for="m-rua">Rua</label>
+          <input id="m-rua" type="text" />
+
+          <label for="m-numero">Número</label>
+          <input id="m-numero" type="number"  />
+  
+          <label for="m-bairro">Bairro</label>
+          <input id="m-bairro" type="text"  />
+  
+          <label for="m-cidade">Cidade</label>
+          <input id="m-cidade" type="text"/>
+          <button id="btnSalvar">Salvar</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+  <script src="script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+  <script>
+     $('#m-cep').mask('00000-000');
+  </script>
+</body>
+
+</html>
